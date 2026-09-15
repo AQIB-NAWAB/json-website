@@ -55,8 +55,8 @@
   source: 'https://github.com/lateapexearlyspeed/Lateapexearlyspeed.JsonSchema'
   homepage: 'https://www.nuget.org/packages/Lateapexearlyspeed.Json.Schema'
   supportedDialects:
-    draft: ['2020-12']
-  lastUpdated: '2023-12-13'
+    draft: ['7', '2019-09', '2020-12']
+  lastUpdated: '2026-02-10'
 
 - name: f5-json-schema
   description: 'JSON schema validation'
@@ -115,6 +115,29 @@
     draft: ['4', '6', '7', '2019-09', '2020-12']
   toolingListingNotes: 'Header-only library'
   lastUpdated: '2024-04-22'
+
+- name: M3
+  description: 'Passes every test in the official JSON Schema Test Suite across all drafts from draft-03 through draft-next — 9,622 assertions with zero failures. Usable from Clojure, Java, Kotlin, Scala, JavaScript, and Node.js.'
+  toolingTypes: ['validator']
+  languages: ['Clojure', 'Java', 'JavaScript']
+  creators:
+    - name: 'Julian Gosnell'
+      username: 'JulesGosnell'
+      platform: 'github'
+  maintainers:
+    - name: 'Julian Gosnell'
+      username: 'JulesGosnell'
+      platform: 'github'
+  license: 'Apache-2.0'
+  source: 'https://github.com/JulesGosnell/m3'
+  homepage: 'https://github.com/JulesGosnell/m3'
+  supportedDialects:
+    draft: ['3', '4', '6', '7', '2019-09', '2020-12']
+    additional:
+      - name: 'draft-next'
+        source: 'https://github.com/json-schema-org/json-schema-spec'
+  toolingListingNotes: 'Written in Clojure/ClojureScript, runs on JVM and in the browser. Also usable from Kotlin, Scala, and Node.js.'
+  lastUpdated: '2026-02-11'
 
 - name: jinx
   description: "jinx is not xml-schema (it's json-schema!)"
@@ -448,6 +471,43 @@
   toolingListingNotes: 'Built for Node.js and browsers. Includes support for custom vocabularies.'
   lastUpdated: '2024-09-04'
 
+- name: json-schema.hyperjump.io
+  description: 'Validate JSON Schema documents online using @hyperjump/json-schema'
+  toolingTypes: ['validator']
+  environments: ['Web (Online)']
+  dependsOnValidators: ['https://github.com/hyperjump-io/json-schema']
+  maintainers:
+    - name: 'Jason Desrosiers'
+      username: 'jdesrosiers'
+      platform: 'github'
+  license: 'MIT'
+  source: 'https://github.com/hyperjump-io/json-schema.hyperjump.io'
+  homepage: 'https://json-schema.hyperjump.io'
+  supportedDialects:
+    draft: ['4', '6', '7', '2019-09', '2020-12']
+  toolingListingNotes: 'Supports multiple schemas and multiple instances; client-side validation'
+  lastUpdated: '2022-08-31'
+
+- name: '@hyperjump/json-schema-coverage'
+  description: >
+    Generate test coverage reports for the JSON Schemas in your codebase.
+    Supports JSON and YAML. Integrates with Vitest.
+  toolingTypes: ['util-testing']
+  languages: ['JavaScript']
+  maintainers:
+    - name: 'Jason Desrosiers'
+      username: 'jdesrosiers'
+      platform: 'github'
+  license: 'MIT'
+  source: 'https://github.com/hyperjump-io/json-schema-coverage'
+  supportedDialects:
+    draft: ['4', '6', '7', '2019-09', '2020-12']
+  toolingListingNotes: >
+    Designed to be used with or without Vitest. Coverage data uses the istanbul
+    coverage format. @hyperjump/json-schema is used for validation and
+    instrumentation.
+  lastUpdated: '2025-07-21'
+
 - name: '@exodus/schemasafe'
   description: 'A reasonably safe JSON Schema validator with draft-04/06/07/2019-09/2020-12 support.'
   toolingTypes: ['validator']
@@ -506,7 +566,7 @@
 - name: json-schema-library
   description: 'Customizable and hackable json-validator and json-schema utilities for traversal, data generation and validation'
   toolingTypes: ['validator', 'util-general-processing', 'schema-to-data']
-  languages: ['Javascript', 'TypeScript']
+  languages: ['JavaScript', 'TypeScript']
   maintainers:
     - name: 'Sascha Goldhofer'
       username: 'sagold'
@@ -858,7 +918,7 @@
 - name: lua-resty-jsonschema
   description: 'Pure Lua JSON schema validator for Lua/LuaJIT'
   toolingTypes: ['validator']
-  languages: ['Lua/LuaJIT']
+  languages: ['Lua']
   maintainers:
     - name: 'YuanSheng Wang'
       username: 'membphis'
@@ -870,22 +930,20 @@
     draft: ['4', '6', '7']
   lastUpdated: '2022-08-31'
 
-- name: json-schema.hyperjump.io
-  description: 'Validate JSON Schema documents online using @hyperjump/json-schema'
+- name: lua-schema
+  description: 'lua-schema is a JSON Schema (classical & modern) data validator for Lua. It validates data from a JSON instance or from any equivalent data model, for example CBOR, Message Pack, UBJSON or just plain Lua.'
   toolingTypes: ['validator']
-  environments: ['Web (Online)']
-  dependsOnValidators: ['https://github.com/hyperjump-io/json-schema']
+  languages: ['Lua']
   maintainers:
-    - name: 'Jason Desrosiers'
-      username: 'jdesrosiers'
-      platform: 'github'
+    - name: 'François Perrad'
+      username: 'fperrad'
+      platform: 'gitlab'
   license: 'MIT'
-  source: 'https://github.com/hyperjump-io/json-schema.hyperjump.io'
-  homepage: 'https://json-schema.hyperjump.io'
+  source: 'https://framagit.org/fperrad/lua-schema'
+  homepage: 'https://fperrad.frama.io/lua-schema'
   supportedDialects:
     draft: ['4', '6', '7', '2019-09', '2020-12']
-  toolingListingNotes: 'Supports multiple schemas and multiple instances; client-side validation'
-  lastUpdated: '2022-08-31'
+  lastUpdated: '2026-01-08'
 
 - name: json-everything
   description: 'System.Text.Json-based support for all of your JSON needs.'
@@ -1471,23 +1529,8 @@
     draft: ['6']
   lastUpdated: '2024-05-31'
 
-- name: JSON Toolkit
-  description: 'JSON Toolkit is a swiss-army knife library for expressive JSON programming in modern C++, and it comes with various JSON Schema foundational utilities, like bundling, analyzing references, and more'
-  toolingTypes: ['util-general-processing']
-  languages: ['C++']
-  maintainers:
-    - name: 'Juan Cruz Viotti'
-      username: 'jviotti'
-      platform: 'github'
-  license: 'AGPL-3.0 and Commercial'
-  source: 'https://github.com/sourcemeta/jsontoolkit'
-  supportedDialects:
-    draft: ['0', '1', '2', '3', '4', '6', '7', '2019-09', '2020-12']
-  toolingListingNotes: 'Comes with its own JSON parser'
-  lastUpdated: '2024-10-15'
-
 - name: Blaze
-  description: 'Blaze is an ultra high-performance JSON Schema validator built on the JSON Toolkit library'
+  description: 'Blaze is an ultra high-performance JSON Schema validator'
   toolingTypes: ['validator']
   languages: ['C++']
   maintainers:
@@ -1497,8 +1540,8 @@
   license: 'AGPL-3.0 and Commercial'
   source: 'https://github.com/sourcemeta/blaze'
   supportedDialects:
-    draft: ['4', '6', '7', '2019-09', '2020-12']
-  lastUpdated: '2024-10-15'
+    draft: ['3', '4', '6', '7', '2019-09', '2020-12']
+  lastUpdated: '2026-05-06'
 
 - name: cypress-ajv-schema-validator
   description: 'Cypress plugin that validates API responses against Plain JSON schemas, and whole Swagger and OpenAPI documents using the Ajv JSON Schema validator. It provides a user-friendly view of validated data, highlighting each validation error and the exact reason for the mismatch. Seamless integration, fast and lightweight.'
@@ -1640,7 +1683,7 @@
   license: 'Apache-2.0'
   source: 'https://github.com/Cosium/json-schema-to-java-record'
   supportedDialects:
-    draft: ['3', '4', '6', '7', '2019-09', '2020-12']    
+    draft: ['3', '4', '6', '7', '2019-09', '2020-12']
 
 - name: json-kotlin-schema-codegen
   description: 'Generates Kotlin data classes, Java classes or TypeScript interfaces from JSON Schema.'
@@ -1915,6 +1958,21 @@
   source: 'https://github.com/vip-git/react-jsonschema-form-material-ui'
   homepage: 'https://react-jsonschema-form-material-ui.github56.now.sh/'
   lastUpdated: '2023-08-17'
+
+- name: Jedison
+  description: 'A JavaScript library that generates forms from JSON Schemas for editing and validating JSON.'
+  toolingTypes: ['validator', 'schema-to-web-UI']
+  languages: ['JavaScript']
+  maintainers:
+    - name: 'German Bisurgi'
+      username: 'germanbisurgi'
+      platform: 'github'
+  license: 'MIT'
+  source: 'https://github.com/germanbisurgi/jedison'
+  homepage: 'https://germanbisurgi.github.io/jedison-docs/'
+  supportedDialects:
+    draft: ['2020-12']
+  lastUpdated: '2026-03-02'
 
 - name: React Schema Form (networknt)
   description: 'React form based on json schema for form generation and validation'
@@ -2319,6 +2377,21 @@
   license: 'Apache-2.0'
   source: 'https://github.com/schemastore/schemastore/'
   homepage: 'https://schemastore.org/json/'
+
+- name: Sourcemeta One
+  description: 'A high-performance self-hosted JSON Schema registry that transforms existing Git repositories of schemas into searchable, discoverable schema catalogs with enterprise-grade governance capabilities'
+  toolingTypes: ['registry']
+  languages: ['C++']
+  maintainers:
+    - name: 'Juan Cruz Viotti'
+      username: 'jviotti'
+      platform: 'github'
+  license: 'BUSL-1.1 and Commercial'
+  source: 'https://github.com/sourcemeta/one'
+  homepage: 'https://one.sourcemeta.com'
+  supportedDialects:
+    draft: ['4', '6', '7', '2019-09', '2020-12']
+  lastUpdated: '2026-04-08'
 
 - name: json-schema-linter
   description: 'Lint/validate/parse json-schema itself, and find typos, missing properties, missing required keys, etc.'
@@ -3276,8 +3349,8 @@
 
 - name: 'json-schema-describes-subset'
   description: 'Tools for static JSON schema analysis and processing, including a function which determines whether one schema describes a subset of another, a function which determines whether a schema describes the empty set and a function that converts a schema to its disjunctive normal form (DNF)'
-  toolingTypes: ['util-general-processing','util-schema-to-schema']
-  languages: ['JavaScript','TypeScript']
+  toolingTypes: ['util-general-processing', 'util-schema-to-schema']
+  languages: ['JavaScript', 'TypeScript']
   dependsOnValidators: ['https://github.com/ajv-validator/ajv']
   creators:
     - name: 'Johannes Bohner'
@@ -3288,12 +3361,13 @@
   homepage: 'https://github.com/jobohner/json-schema-describes-subset#readme'
   supportedDialects:
     draft: ['2020-12']
- 
+
 - name: 'EasyTalk'
   description: 'EasyTalk is a Ruby library that simplifies defining, validating and generating JSON Schema. It provides an intuitive interface for Ruby developers to define structured data models that can be used for validation and documentation.'
   toolingTypes: ['validator', 'code-to-schema', 'model-to-schema']
   languages: ['Ruby']
-  environments: ['Linux', 'macOS', 'Windows', 'Platform supporting Ruby runtime']
+  environments:
+    ['Linux', 'macOS', 'Windows', 'Platform supporting Ruby runtime']
   creators:
     - name: 'Sergio Bayona'
       platform: 'other'
@@ -3304,40 +3378,19 @@
   source: 'https://github.com/sergiobayona/easy_talk'
   homepage: 'https://rubygems.org/gems/easy_talk'
   supportedDialects:
-    draft: ['2019-09','2020-12']
-
-- name: 'Thydux Schema Bridge'
-  description: 'Thydux Schema Bridge is a conversion and validation tool designed to streamline integration between blockchain data models and standard JSON Schema dialects. It supports schema-to-code, schema validation, and schema migration tailored for DeFi and investment platforms.'
-  toolingTypes: ['validator','schema-to-code','util-schema-to-schema','util-draft-migration','util-format-conversion']
-  languages: ['JavaScript','TypeScript','Python']
-  environments: ['Node.js','Browser (WebAssembly build planned)','CLI']
-  creators:
-    - name: 'Investor ab'
-      username: 'THYDUX'
-      platform: 'github'
-    - name: 'Thydux Open Source Contributors'
-      platform: 'other'
-  maintainers:
-    - name: 'Thydux Developers Team'
-      platform: 'other'
-    - name: 'Investor ab'
-      username: 'THYDUX'
-      platform: 'github'
-  license: 'MIT'
-  source: 'https://github.com/THYDUX/schema-bridge'
-  homepage: 'https://thyduxweb.com/tools/schema-bridge'
-  supportedDialects:
-    draft: ['4','6','7','2019-09','2020-12']
-    additional:
-      - name: 'Custom DeFi Schema dialect'
-        source: 'https://thyduxweb.com/docs/defi-schema'
-  toolingListingNotes: 'Currently in beta. Actively seeking contributors and validator testing feedback from the DeFi developer community.'
-  dependsOnValidators: ['https://github.com/ajv-validator/ajv', 'https://github.com/python-jsonschema/jsonschema']
+    draft: ['2019-09', '2020-12']
 
 - name: 'ToDiagram'
   description: 'ToDiagram is capable of accurately transforming JSON, YAML, XML and CSV into interactive diagrams where you can edit the data backwards from the visualization. Additionally, you can enable the JSON Schema validation which highlights the invalid fields in real-time, displaying the errors at the nodes.'
-  toolingTypes: ['schema-to-web-UI','validator','data-to-schema','schema-to-data','editor']
-  languages: ['JSON','YAML','XML','CSV']
+  toolingTypes:
+    [
+      'schema-to-web-UI',
+      'validator',
+      'data-to-schema',
+      'schema-to-data',
+      'editor',
+    ]
+  languages: ['JSON', 'YAML', 'XML', 'CSV']
   environments: ['Web']
   creators:
     - name: 'Aykut Sarac'
@@ -3350,4 +3403,131 @@
   license: 'Proprietary'
   homepage: 'https://todiagram.com/editor'
   supportedDialects:
-    draft: ['4','6','7','2019-09','2020-12']
+    draft: ['4', '6', '7', '2019-09', '2020-12']
+
+- name: 'playwright-ajv-schema-validator'
+  description: 'A Playwright plugin for API schema validation against plain JSON schemas, Swagger schema documents. Built on the robust core-ajv-schema-validator plugin and powered by the Ajv JSON Schema Validator, it delivers results in a clear, user-friendly format, simplifying the process of identifying and addressing schema issues.'
+  toolingTypes: ['validator', 'util-testing']
+  languages: ['JavaScript', 'TypeScript']
+  dependsOnValidators:
+    [
+      'https://github.com/sclavijosuero/core-ajv-schema-validator',
+      'https://github.com/ajv-validator/ajv',
+    ]
+  creators:
+    - name: 'Sebastian Clavijo Suero'
+      username: 'sclavijosuero'
+      platform: 'github'
+  maintainers:
+    - name: 'Sebastian Clavijo Suero'
+      username: 'sclavijosuero'
+      platform: 'github'
+  license: 'MIT'
+  source: 'https://github.com/sclavijosuero/playwright-ajv-schema-validator'
+  homepage: 'https://github.com/sclavijosuero/playwright-ajv-schema-validator/blob/main/README.md'
+  supportedDialects:
+    draft: ['4', '6', '7', '2019-09', '2020-12']
+  toolingListingNotes: 'It uses the Ajv JSON Schema Validator and core-ajv-schema-validator as its core engines.'
+
+- name: 'shacl2code'
+  description: 'This tool can be used to convert a SHACL model into various code bindings, including JSON schema. The resulting binding does standard type validations, using information provided by SHACL model.'
+  toolingTypes: ['model-to-schema']
+  languages: ['C++', 'JSON Schema', 'Python', 'Go']
+  creators:
+    - name: 'Joshua Watt'
+      username: 'JPEWdev'
+      platform: 'github'
+  maintainers:
+    - name: 'Joshua Watt'
+      username: 'JPEWdev'
+      platform: 'github'
+  license: 'MIT'
+  source: 'https://github.com/jpewdev/shacl2code/'
+  homepage: 'https://pypi.org/project/shacl2code/'
+  supportedDialects:
+    draft: ['2020-12']
+
+- name: 'jsonschema-models'
+  description: 'Pydantic models for representing JSON Schema objects.'
+  toolingTypes: ['code-to-schema']
+  languages: ['Python 3']
+  maintainers:
+    - name: 'Gavin M. Roy'
+      username: 'gmr'
+      platform: 'github'
+  license: 'BSD'
+  source: 'https://github.com/gmr/jsonschema-models'
+  supportedDialects:
+    draft: ['2020-12']
+
+- name: 'Blaze4J'
+  description: 'Blaze4J is a high-performance Java wrapper for the Blaze JSON Schema validator,'
+  toolingTypes: ['validator']
+  languages: ['Java']
+  environments: ['Windows', 'Linux', 'macOS']
+  creators:
+    - name: 'Madhav Dhatrak (Contributor)'
+      username: 'MadhavDhatrak'
+      platform: 'github'
+    - name: 'Bence Eros (Mentor)'
+      username: 'erosb'
+      platform: 'github'
+  maintainers:
+    - name: 'Madhav Dhatrak'
+      username: 'MadhavDhatrak'
+      platform: 'github'
+  license: 'AGPL-3.0'
+  source: 'https://github.com/MadhavDhatrak/Blaze4J.git'
+  homepage: 'https://github.com/MadhavDhatrak/Blaze4J.git'
+  supportedDialects:
+    draft: ['4', '6', '7', '2019-09', '2020-12']
+  toolingListingNotes: 'Project built under GSoC "25. High-performance Java wrapper for Blaze JSON Schema validator using Java FFM API.'
+
+- name: 'SJF4J'
+  description: 'SJF4J (Simple JSON Facade for Java) is a Java library that provides full support for JSON Schema Draft 2020-12 and focuses on validating native Java object models in addition to JSON data. SJF4J can validate POJOs, JOJOs, Maps, Lists, and other native Java objects directly, without requiring prior serialization to JSON.'
+  toolingTypes: ['validator']
+  languages: ['Java']
+  creators:
+    - name: 'hannyu'
+      username: 'hannyu'
+      platform: 'github'
+  maintainers:
+    - name: 'hannyu'
+      username: 'hannyu'
+      platform: 'github'
+  license: 'MIT'
+  source: 'https://github.com/sjf4j-projects/sjf4j'
+  homepage: 'https://sjf4j.org'
+  supportedDialects:
+    draft: ['2020-12']
+  toolingListingNotes: 'SJF4J has passed Bowtie evaluation and provides full Draft 2020-12 support. Validates native Java objects directly without JSON serialization.'
+
+- name: 'json-schema-utils'
+  description: 'Random utilities to analyze and manipulate JSON Schema'
+  toolingTypes: ['validator', 'linter', 'schema-to-types', 'util-general-processing']
+  languages: ['Python']
+  maintainers:
+    - username: 'zx80'
+      platform: 'github'
+    - username: 'clairey-zx81'
+      platform: 'github'
+  license: 'Public Domain'
+  source: 'https://github.com/zx80/json-schema-utils'
+  homepage: 'https://github.com/zx80/json-schema-utils'
+  supportedDialects:
+    draft: ['1', '2', '3', '4', '5', '6', '7', '2019-09', '2020-12']
+
+- name: 'json-model'
+  description: 'JSON Model Tools: compilers (C, Python, JavaScript, PL/pgSQL, Java) and exporters (JSON Schema, Pydantic)'
+  toolingTypes: ['model-to-schema']
+  languages: ['Python']
+  maintainers:
+    - username: 'clairey-zx81'
+      platform: 'github'
+    - username: 'zx80'
+      platform: 'github'
+  license: 'Public Domain'
+  source: 'https://github.com/clairey-zx81/json-model'
+  homepage: 'https://github.com/clairey-zx81/json-model'
+  supportedDialects:
+    draft: ['2020-12']

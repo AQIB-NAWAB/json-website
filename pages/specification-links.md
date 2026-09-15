@@ -1,9 +1,9 @@
 ---
 title: Specification Links
 section: docs
-prev: 
-  label: Specification
-  url: /specification
+prev:
+  label: Draft 05
+  url: /draft-05
 next: 
   label: Migration
   url: /specification/migration
@@ -23,7 +23,7 @@ Starting with what had been called "Draft 8" while it was being written, meta-sc
 
 ### Table of All Versions of Everything
 
-For links to the somewhat more readably formatted versions on this web site, and for links to the various meta-schemas and other supplemental documents, see the the following sections.
+For links to the somewhat more readably formatted versions on this web site, and for links to the various meta-schemas and other supplemental documents, see the following sections.
 
 <table>
   <tbody>

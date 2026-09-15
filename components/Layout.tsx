@@ -1,4 +1,12 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+/* eslint-disable linebreak-style */
+/* istanbul ignore file */
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+} from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import classnames from 'classnames';
@@ -10,6 +18,8 @@ import { useTheme } from 'next-themes';
 import DarkModeToggle from './DarkModeToggle';
 import ScrollButton from './ScrollButton';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import AnnouncementBanner from './AnnouncementBanner';
 
 type Props = {
   children: React.ReactNode;
@@ -34,11 +44,40 @@ export default function Layout({
   const router = useRouter();
 
   const mobileNavRef = useRef<HTMLDivElement>(null);
+  const announcementRef = useRef<HTMLDivElement>(null);
+  const [announcementHeight, setAnnouncementHeight] = useState(0);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      setHeaderHeight(headerRef.current?.getBoundingClientRect().height ?? 0);
+    };
+
+    updateHeaderHeight();
+    window.addEventListener('resize', updateHeaderHeight);
+    return () => window.removeEventListener('resize', updateHeaderHeight);
+  }, [announcementHeight]);
+
+  const updateAnnouncementHeight = useCallback(() => {
+    setAnnouncementHeight(
+      announcementRef.current?.getBoundingClientRect().height ?? 0,
+    );
+  }, []);
 
   React.useEffect(
     () => useStore.setState({ overlayNavigation: null }),
     [router.asPath],
   );
+
+  useEffect(() => {
+    updateAnnouncementHeight();
+    window.addEventListener('resize', updateAnnouncementHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateAnnouncementHeight);
+    };
+  }, [updateAnnouncementHeight]);
 
   useEffect(() => {
     // Check if the URL contains "community"
@@ -89,22 +128,27 @@ export default function Layout({
         <main
           className={classnames(
             mainClassName,
-            'z-10 h-screen xl:rounded-xl pt-4 mx-auto',
+            'z-10 h-screen xl:rounded-xl mx-auto',
             // 'z-10 h-screen  xl:rounded-xl pt-4 mx-auto',
           )}
         >
           <header
+            ref={headerRef}
             className={classnames(
               'w-full bg-white dark:bg-slate-800 fixed top-0 z-[170] shadow-xl drop-shadow-lg',
             )}
           >
+            <AnnouncementBanner
+              bannerRef={announcementRef}
+              onHeightChange={setAnnouncementHeight}
+            />
             <div className='flex w-full md:justify-between items-center ml-8 2xl:px-12 py-4'>
               <Logo />
               <MainNavigation />
             </div>
           </header>
-          <div ref={mobileNavRef}>
-            {showMobileNav && <MobileNav />}
+          <div ref={mobileNavRef} style={{ paddingTop: headerHeight }}>
+            {showMobileNav && <MobileNav topOffset={headerHeight} />}
             {children}
           </div>
           <ScrollButton />
@@ -159,9 +203,9 @@ const MainNavLink = ({
         // }`,
         // `${extractPathWithoutFragment(router.asPath) === uri ? 'text-primary dark:text-white dark:underline hover:text-primary' : 'text-slate-600 dark:text-white hover:text-primary dark:hover:underline'}`,
         {
-          'text-primary dark:text-white dark:underline hover:text-primary':
+          'text-primary dark:text-blue-400 hover:text-primary dark:hover:text-blue-400':
             isActiveNav,
-          'text-slate-600 dark:text-white hover:text-primary dark:hover:underline':
+          'text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-blue-300':
             !isActiveNav,
         },
       )}
@@ -242,7 +286,9 @@ const MainNavigation = () => {
         >
           <Search />
         </div>
-        <DarkModeToggle />
+        <div onClick={() => useStore.setState({ overlayNavigation: null })}>
+          <DarkModeToggle />
+        </div>
         {showMobileNav === false ? (
           <div onClick={() => useStore.setState({ overlayNavigation: 'docs' })}>
             <div className='block lg:hidden space-y-2  items-center'>
@@ -256,44 +302,51 @@ const MainNavigation = () => {
             style={{
               backgroundImage: closeMenu,
             }}
-            className='h-6 w-6 lg:hidden bg-center bg-[length:22px_22px] bg-no-repeat  transition-all cursor-pointer dark:text-slate-300'
+            className='h-6 w-6 lg:hidden bg-center bg-[length:22px_22px] bg-no-repeat  transition-all cursor-pointer dark:text-slate-300 z-2[200]'
             onClick={() => useStore.setState({ overlayNavigation: null })}
           />
         )}
       </div>
       <div className='flex items-center justify-end mr-8'>
-        <a
+        <Button
+          asChild
           data-testid='Button-link'
-          target='_blank'
-          rel='noopener noreferrer'
           className='cursor-pointer hidden lg:flex bg-primary hover:bg-blue-700 text-white transition-all duration-500 ease-in-out rounded-md px-3 text-sm font-medium tracking-heading py-2.5 ml-2'
-          href='https://github.com/json-schema-org/json-schema-spec'
         >
-          <span className='inline-block mr-2'>
-            <svg
-              className='inline-block -mt-1 w-6 h-6'
-              fill='currentColor'
-              viewBox='0 0 24 24'
-            >
-              <path
-                fillRule='evenodd'
-                d='M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z'
-                clipRule='evenodd'
-              ></path>
-            </svg>
-          </span>
-          <span className='inline-block'>Star on GitHub</span>
-        </a>
+          <a
+            target='_blank'
+            rel='noopener noreferrer'
+            href='https://github.com/json-schema-org/json-schema-spec'
+          >
+            <span className='inline-block mr-1'>
+              <svg
+                className='inline-block -mt-1 w-6 h-6 size-7'
+                fill='currentColor'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  fillRule='evenodd'
+                  d='M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z'
+                  clipRule='evenodd'
+                ></path>
+              </svg>
+            </span>
+            <span className='inline-block'>Star on GitHub</span>
+          </a>
+        </Button>
       </div>
     </div>
   );
 };
 
-const MobileNav = () => {
+const MobileNav = ({ topOffset }: { topOffset: number }) => {
   const section = useContext(SectionContext);
 
   return (
-    <div className='flex flex-col lg:hidden shadow-xl justify-end fixed bg-white w-full  z-[190] top-16 left-0 pl-8 dark:bg-slate-800'>
+    <div
+      style={{ top: `${topOffset}px` }}
+      className='flex flex-col lg:hidden shadow-xl justify-end fixed bg-white w-full z-[190] left-0 pl-8 dark:bg-slate-800'
+    >
       <MainNavLink
         uri='/specification'
         label='Specification'
@@ -344,13 +397,18 @@ const Footer = () => (
         <div className='flex flex-col text-center sm:text-left'>
           <a
             href='https://opencollective.com/json-schema'
-            className='text-white mb-2'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-white mb-2 transition-transform duration-300 ease-out hover:scale-105 hover:-translate-y-[2px]'
           >
             Open Collective
           </a>
         </div>
         <div className='flex flex-col text-center sm:text-left'>
-          <Link href='/overview/code-of-conduct' className='text-white mb-2'>
+          <Link
+            href='/overview/code-of-conduct'
+            className='text-white mb-2 transition-transform duration-300 ease-out hover:scale-105 hover:-translate-y-[2px]'
+          >
             Code of Conduct
           </Link>
         </div>
@@ -359,13 +417,15 @@ const Footer = () => (
         <div className=''>
           <a
             href='https://json-schema.org/slack'
-            className='flex items-center text-white'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='flex items-center text-white group transition-transform duration-300 ease-out hover:scale-105 hover:-translate-y-[2px]'
           >
             <Image
               src='/img/logos/slack_logo_small-white.svg'
               width={16}
               height={16}
-              className=' mr-2'
+              className='mr-2 group-hover:brightness-125 transition-all duration-300'
               alt='Slack logo'
             />
             Slack
@@ -374,13 +434,15 @@ const Footer = () => (
         <div className=''>
           <a
             href='https://x.com/jsonschema'
-            className='flex items-center text-white'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='flex items-center text-white group transition-transform duration-300 ease-out hover:scale-105 hover:-translate-y-[2px]'
           >
             <Image
               src='/img/logos/x-twitter.svg'
               width={16}
               height={16}
-              className=' mr-2'
+              className='mr-2 group-hover:brightness-125 transition-all duration-300'
               alt='X logo'
             />{' '}
             X
@@ -389,13 +451,15 @@ const Footer = () => (
         <div className=''>
           <a
             href='https://linkedin.com/company/jsonschema/'
-            className='flex items-center text-white'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='flex items-center text-white group transition-transform duration-300 ease-out hover:scale-105 hover:-translate-y-[2px]'
           >
             <Image
               src='/img/logos/icons8-linkedin-2.svg'
               width={16}
               height={16}
-              className=' mr-2'
+              className='mr-2 group-hover:brightness-125 transition-all duration-300'
               alt='LinkedIn logo'
             />
             LinkedIn
@@ -404,13 +468,15 @@ const Footer = () => (
         <div className=''>
           <a
             href='https://www.youtube.com/@JSONSchemaOrgOfficial'
-            className='flex items-center text-white'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='flex items-center text-white group transition-transform duration-300 ease-out hover:scale-105 hover:-translate-y-[2px]'
           >
             <Image
               src='/img/logos/icons8-youtube.svg'
               width={16}
               height={16}
-              className='mr-2'
+              className='mr-2 group-hover:brightness-125 transition-all duration-300'
               alt='YouTube logo'
             />
             Youtube
@@ -419,13 +485,15 @@ const Footer = () => (
         <div className=''>
           <a
             href='https://github.com/json-schema-org'
-            className='flex items-center text-white'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='flex items-center text-white group transition-transform duration-300 ease-out hover:scale-105 hover:-translate-y-[2px]'
           >
             <Image
               src='/img/logos/github_logo-white.svg'
               width={16}
               height={16}
-              className='mr-2'
+              className='mr-2 group-hover:brightness-125 transition-all duration-300'
               alt='GitHub logo'
             />
             GitHub
@@ -479,9 +547,16 @@ const FaviconHead = () => {
     const matcher: MediaQueryList = window.matchMedia(
       '(prefers-color-scheme: dark)',
     );
-    matcher.addEventListener('change', () => onUpdate(matcher));
+
+    const handleChange = () => onUpdate(matcher);
+
+    matcher.addEventListener('change', handleChange);
     onUpdate(matcher);
-  }, []);
+
+    return () => {
+      matcher.removeEventListener('change', handleChange);
+    };
+  }, [onUpdate]);
 
   if (isDarkMode) {
     return (
